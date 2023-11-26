@@ -2,8 +2,12 @@
 # Technical Test
 
 Result of the required technical test.
-
-
+The login credentials are: 
+```bash
+email: test@test.com
+password: test
+```
+routes are protected with JWT.
 
 ## Installation
 
