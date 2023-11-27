@@ -21,6 +21,33 @@ To install all the dependencies run the following command in the **front** and *
 
 - [@Fabrizio Rondinella](https://github.com/JackER4565)
 
+## Endpoints
+
+This are the endpoints of this repository:
+
+# /customers (protected)
+
+|Method|Route|Description|
+|---|---|---|
+|GET|/|Gets all customers from DB|
+|GET|/DB|Gets all customers from openpay|
+|POST|/id|Create one customer to both|
+|DELETE|/id|Deletes one customer from both|
+|PUT|/id|Updates one customer from both|
+
+# /charges (protected)
+
+|Method|Route|Description|
+|---|---|---|
+|POST|/id|Create one charge to DB and openpay|
+|GET|/|Get all charges from DB|
+
+# /login
+
+|Method|Route|Description|
+|---|---|---|
+|POST|/|Logs in to get token|
+
 
 ## Environment Variables
 
