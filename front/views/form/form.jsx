@@ -1,9 +1,17 @@
-import axios from "axios";
 import styles from "./form.module.css";
 import { useForm } from "react-hook-form";
 import PropTypes from "prop-types";
 
-function Form({ data, setShowForm }) {
+
+Form.propTypes = {
+	data: PropTypes.oneOfType([PropTypes.object, PropTypes.bool]),
+	setShowForm: PropTypes.func,
+	createUser: PropTypes.func,
+	updateUser: PropTypes.func,
+};
+
+
+function Form({ data, setShowForm, createUser, updateUser }) {
 	const {
 		register,
 		handleSubmit,
@@ -24,7 +32,6 @@ function Form({ data, setShowForm }) {
 		},
 	});
 
-	const url = "http://localhost:3000/customers";
 	const onSubmit = (data) => {
 		if (data?.id) {
 			updateUser(data);
@@ -32,31 +39,7 @@ function Form({ data, setShowForm }) {
 			createUser(data);
 		}
 	};
-	function updateUser(formValues) {
-		const jsonObject = { ...formValues };
-		axios
-			.put(url + "/" + formValues.id, jsonObject)
-			.then(() => {
-				alert("Success!");
-				setShowForm(false);
-			})
-			.catch((error) => {
-				alert("Error:", error.message);
-			});
-	}
 
-	function createUser(formValues) {
-		const jsonObject = { ...formValues };
-		axios
-			.post(url, jsonObject)
-			.then(() => {
-				alert("Success!");
-				setShowForm(false);
-			})
-			.catch((error) => {
-				alert("Error:", error.message);
-			});
-	}
 
 	function handleCancel() {
 		setShowForm(false);
@@ -228,8 +211,3 @@ function Form({ data, setShowForm }) {
 }
 
 export default Form;
-
-Form.propTypes = {
-	data: PropTypes.object,
-	setShowForm: PropTypes.func,
-};

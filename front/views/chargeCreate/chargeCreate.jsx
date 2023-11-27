@@ -1,9 +1,14 @@
 import styles from "./chargeCreate.module.css";
 import { useForm } from "react-hook-form";
-import axios from "axios";
+import PropTypes from "prop-types";
 
-function ChargeCreate({ setShowForm, data}) {
-	const url = "http://localhost:3000/charges";
+ChargeCreate.propTypes = {
+	setShowForm: PropTypes.func,
+	data: PropTypes.object,
+	chargeSubmit: PropTypes.func,
+};
+
+function ChargeCreate({ setShowForm, data, chargeSubmit}) {
 	const {
 		register,
 		handleSubmit,
@@ -11,19 +16,10 @@ function ChargeCreate({ setShowForm, data}) {
 	} = useForm();
 
 	const onSubmit = (formData) => {
-		axios
-			.post(url + "/" + data.id, formData)
-			.then(() => {
-				alert("Success!");
-                setShowForm(false);
-			})
-			.catch((error) => {
-				alert("Error:", error.message);
-			});
+		chargeSubmit(formData, data.id);
 	};
 
     function handleCancel() {
-        console.log("cancel");
         setShowForm(false);
     }
 

@@ -1,9 +1,9 @@
 import './App.css'
 import { Routes, Route, Navigate } from "react-router-dom";
-import Users from "../components/users/users";
 import LoginPage from "../components/login/login";
 import RouteGuard from "../helpers/routeGuard";
 
+import Home from "../views/home/home";
 import setAuthToken from "../helpers/interceptor";
 
 function App() {
@@ -15,7 +15,7 @@ function App() {
       <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route element={<RouteGuard />}>
-              <Route path="/" element={<Users />} />
+              <Route path="/" element={<Home />} />
           </Route>
             <Route path="*" element={<Navigate to="/" />} />
       </Routes>

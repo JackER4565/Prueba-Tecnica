@@ -4,7 +4,7 @@ const openpay = new Openpay(
 	process.env.OPENPAY_PRIVATE,
 	false
 );
-const db = require('../db');
+const db = require("../db");
 
 const createCharge = async (req, res) => {
 	const {
@@ -18,6 +18,7 @@ const createCharge = async (req, res) => {
 		res.status(400).send({
 			message: "All fields are required",
 		});
+		return;
 	}
 	const newCharge = {
 		method: "store",
@@ -35,13 +36,12 @@ const createCharge = async (req, res) => {
 	}
 	const customerId = req.params.id;
 
-
 	openpay.customers.charges.create(
 		customerId,
 		newCharge,
 		function (error, body, response) {
 			if (error) {
-				res.status(error.http_code).send({
+				res.status(500).send({
 					message: "Openpay Create Customer Charge Error",
 					error: error.description,
 				});
@@ -57,8 +57,8 @@ const createCharge = async (req, res) => {
 						method: body.method,
 						reference: body.reference,
 						currency: body.currency,
-						barcode_url: body.barcode_url,
-						url_store: body.url_store,
+						barcode_url: body.payment_method.barcode_url,
+						url_store: body.payment_method.url_store,
 						authorization: body.authorization,
 						operation_type: body.operation_type,
 						transaction_type: body.transaction_type,
@@ -73,32 +73,35 @@ const createCharge = async (req, res) => {
 							});
 							return;
 						}
+
+						res.status(200).send({
+							message: "Customer Charge Created Successfully",
+							response: response,
+						});
 					}
 				);
-
-				res.status(200).send({
-					message: "Customer Charge Created Successfully",
-					response: response,
-				});
 			}
 		}
 	);
 };
 
 const getChargesDB = async (req, res) => {
-    db.query("SELECT charges.*, users.name FROM charges INNER JOIN users ON charges.customer_id = users.id", (err, result) => {
-        if (err) {
-            res.status(500).send({ message: "DB Error", error: err });
-            return;
-        }
-        res.status(200).send({
-            message: "Charges retrieved successfully",
-            response: result,
-        });
-    });
+	db.query(
+		"SELECT charges.*, users.name FROM charges INNER JOIN users ON charges.customer_id = users.id",
+		(err, result) => {
+			if (err) {
+				res.status(500).send({ message: "DB Error", error: err });
+				return;
+			}
+			res.status(200).send({
+				message: "Charges retrieved successfully",
+				response: result,
+			});
+		}
+	);
 };
 
 module.exports = {
 	createCharge,
-    getChargesDB,
+	getChargesDB,
 };

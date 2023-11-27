@@ -17,7 +17,7 @@ const getCustomers = async (req, res) => {
 	};
 	openpay.customers.list(searchParams, function (error, body, response) {
 		if (error) {
-			res.status(error.http_code).send({
+			res.status(500).send({
 				message: "Openpay List Search Error",
 				error: error.description,
 			});
@@ -52,7 +52,7 @@ const getCustomer = async (req, res) => {
 	openpay.customers.get(customerId, function (error, body, response) {
 		if (error) {
 			res
-				.status(error.http_code)
+				.status(500)
 				.send({ message: "Openpay Search Error", error: error.description });
 		} else {
 			res.status(200).send({
@@ -104,7 +104,7 @@ const createCustomer = async (req, res) => {
 	openpay.customers.create(newCustomer, (error, customer) => {
 		if (error) {
 			res
-				.status(error.http_code)
+				.status(500)
 				.send({ message: "Openpay Create Error", error: error.description });
 		} else {
 			db.query(
@@ -152,7 +152,7 @@ const deleteCustomer = async (req, res) => {
 	openpay.customers.delete(customerId, function (error, body, response) {
 		if (error) {
 			res
-				.status(error.http_code)
+				.status(500)
 				.send({ message: "Openpay Delete Error", error: error.description });
 		} else {
 			db.query(
@@ -206,7 +206,7 @@ const updateCustomer = async (req, res) => {
 	openpay.customers.get(customerId, function (error, body, response) {
 		if (error) {
 			res
-				.status(error.http_code)
+				.status(500)
 				.send({ message: "Openpay Search Error", error: error.description });
 		} else {
 			const newData = {

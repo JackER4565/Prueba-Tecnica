@@ -1,87 +1,16 @@
-import { useEffect, useState } from "react";
 import styles from "./users.module.css";
-import axios from "axios";
-import Form from "../../views/form";
-import ChargeCreate from "../../views/chargeCreate";
-import Charges from "../charges/charges";
 
-
-function Users() {
-	const url = "http://localhost:3000/customers";
-
-	const [users, setUsers] = useState([]);
-	const [showForm, setShowForm] = useState(false);
-	const [showChargeForm, setShowChargeForm] = useState(false);
-	const [loading, setLoading] = useState(false);
-	const [selectedUser, setSelectedUser] = useState(false)
-
-	useEffect(() => {
-		if ( !showForm) getUsers();
-	}, [showForm]);
-
-	function getUsers() {
-		setLoading(true);
-		axios
-			.get(url)
-			.then((data) => {
-				if (data.status !== 200) {
-					throw Error(data.message);
-				}
-				setUsers(data.data.response.body);
-				setLoading(false);
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-				alert("Error getting users: " + error.message);
-				setLoading(false);
-			});
-	}
-
-	function handleEdit(id) {
-		setSelectedUser(users.filter((user) => user.id === id)[0]);
-		setShowForm(true);
-	}
-
-	function handleCreate() {
-		setSelectedUser(false);
-		setShowForm(true);
-	}
-
-	function handleDelete(id) {
-		if (!window.confirm("Are you sure you want to delete this user?")) return;
-		axios
-			.delete(url + "/" + id)
-			.then(({ data }) => {
-				alert("Success deleting user: " + data.message);
-				getUsers();
-			})
-			.catch(({ response }) => {
-				alert("Error deleting user: " + response.data.error);
-			});
-	}
-
-	function handleCreateCharge(id) {
-		setSelectedUser(users.filter((user) => user.id === id)[0]);
-		setShowChargeForm(true);
-	}
-
-	if (loading)
-		return (
-			<div className={styles.container}>
-				<h1>Loading...</h1>
-			</div>
-		);
+function Users({
+	users,
+	handleCreate,
+	handleEdit,
+	handleDelete,
+	handleCreateCharge,
+}) {
 	return (
 		<>
+		{users && 
 			<div className={styles.container}>
-				{showForm && <Form
-					data={selectedUser}
-					setShowForm={setShowForm}
-				/>}
-				{showChargeForm && <ChargeCreate
-					data={selectedUser}
-					setShowForm={setShowChargeForm}
-				/>}
 				<div
 					className={styles.listUsers}
 					name="listUsers">
@@ -157,7 +86,7 @@ function Users() {
 					)}
 				</div>
 			</div>
-			<Charges />
+		}
 		</>
 	);
 }

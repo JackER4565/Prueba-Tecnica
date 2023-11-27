@@ -1,19 +1,21 @@
 .container {
   display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    top: 5rem;
-    width: 1260px;
-    margin: 0 auto;
-    padding-top: 20px;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  top: 5rem;
+  width: 1260px;
+  margin: 0 auto;
+  padding-top: 20px;
 }
+
 .listUsers {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
+
 .listUsers table {
   margin-top: 1rem;
   border: 1px solid black;
@@ -30,11 +32,11 @@
 }
 
 .listUsers table tbody tr:nth-child(even) {
-  background-color: rgba(54,54,54,0.4);
+  background-color: rgba(54, 54, 54, 0.4);
 }
 
 .listUsers table tbody tr:nth-child(odd) {
-  background-color: rgba(54,54,54,1);
+  background-color: rgba(54, 54, 54, 1);
 }
 
 .listUsers table tbody tr td {
@@ -45,5 +47,3 @@
 .createUser {
   margin-top: 1rem;
 }
-
-
