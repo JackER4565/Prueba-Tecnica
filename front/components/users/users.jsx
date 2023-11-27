@@ -2,12 +2,16 @@ import { useEffect, useState } from "react";
 import styles from "./users.module.css";
 import axios from "axios";
 import Form from "../../views/form";
+import ChargeCreate from "../../views/chargeCreate";
+import Charges from "../charges/charges";
+
 
 function Users() {
 	const url = "http://localhost:3000/customers";
 
 	const [users, setUsers] = useState([]);
 	const [showForm, setShowForm] = useState(false);
+	const [showChargeForm, setShowChargeForm] = useState(false);
 	const [loading, setLoading] = useState(false);
 	const [selectedUser, setSelectedUser] = useState(false)
 
@@ -56,19 +60,27 @@ function Users() {
 			});
 	}
 
+	function handleCreateCharge(id) {
+		setSelectedUser(users.filter((user) => user.id === id)[0]);
+		setShowChargeForm(true);
+	}
+
 	if (loading)
 		return (
 			<div className={styles.container}>
 				<h1>Loading...</h1>
 			</div>
 		);
-
 	return (
 		<>
 			<div className={styles.container}>
 				{showForm && <Form
 					data={selectedUser}
 					setShowForm={setShowForm}
+				/>}
+				{showChargeForm && <ChargeCreate
+					data={selectedUser}
+					setShowForm={setShowChargeForm}
 				/>}
 				<div
 					className={styles.listUsers}
@@ -92,6 +104,7 @@ function Users() {
 										<th>Created</th>
 										<th>Edit</th>
 										<th>Delete</th>
+										<th>Create Charge</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -122,6 +135,11 @@ function Users() {
 													Delete
 												</button>
 											</td>
+											<td>
+												<button onClick={() => handleCreateCharge(user.id)}>
+													Create Charge
+												</button>
+											</td>
 										</tr>
 									))}
 								</tbody>
@@ -139,6 +157,7 @@ function Users() {
 					)}
 				</div>
 			</div>
+			<Charges />
 		</>
 	);
 }

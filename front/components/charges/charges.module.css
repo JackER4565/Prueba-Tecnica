@@ -1,0 +1,51 @@
+.container {
+    display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* position: relative; */
+      /* top: 5rem; */
+      /* height: calc(100vh - 5rem); 5rem is the height of the NavBar */
+      width: 1260px;
+      margin: 0 auto;
+      padding-top: 100px;
+  }
+  .listCharges {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .listCharges table {
+    margin-top: 1rem;
+    border: 1px solid black;
+    width: 100%;
+  }
+  
+  .listCharges table thead {
+    background-color: #51965b;
+  }
+  
+  .listCharges table thead tr th {
+    padding: 0.5rem;
+    color: white;
+  }
+  
+  .listCharges table tbody tr:nth-child(even) {
+    background-color: rgba(54,54,54,0.4);
+  }
+  
+  .listCharges table tbody tr:nth-child(odd) {
+    background-color: rgba(54,54,54,1);
+  }
+  
+  .listCharges table tbody tr td {
+    padding: 0.5rem;
+    text-align: center;
+  }
+  
+  .createUser {
+    margin-top: 1rem;
+  }
+  
+  
+  

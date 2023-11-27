@@ -86,7 +86,7 @@ const createCharge = async (req, res) => {
 };
 
 const getChargesDB = async (req, res) => {
-    db.query("SELECT * FROM charges", (err, result) => {
+    db.query("SELECT charges.*, users.name FROM charges INNER JOIN users ON charges.customer_id = users.id", (err, result) => {
         if (err) {
             res.status(500).send({ message: "DB Error", error: err });
             return;
